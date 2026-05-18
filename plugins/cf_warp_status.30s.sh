@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# <xbar.title>WARP Status</xbar.title>
+# <xbar.version>v0.0.1</xbar.version>
+# <xbar.author>Micael Malta</xbar.author>
+# <xbar.author.github>micaelmalta</xbar.author.github>
+# <xbar.desc>Shows Cloudflare WARP connection status in the macOS menu bar</xbar.desc>
+# <xbar.dependencies>warp-cli</xbar.dependencies>
+# <xbar.abouturl>https://github.com/micaelmalta/warp-status</xbar.abouturl>
+
 WARP_CLI=/usr/local/bin/warp-cli
 WARP_RAW=$($WARP_CLI status 2>&1)
 

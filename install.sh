@@ -1,11 +1,14 @@
 #!/bin/bash
 
-set -e
+set -eo pipefail
+trap 'echo "Error: install.sh failed on line $LINENO" >&2' ERR
+TMP=""
+trap '[[ -n "$TMP" ]] && rm -f "$TMP"' EXIT
 
 REPO="https://raw.githubusercontent.com/micaelmalta/warp-status/main"
 
 # Install SwiftBar
-if ! command -v swiftbar &>/dev/null && ! [ -d "/Applications/SwiftBar.app" ]; then
+if ! [ -d "/Applications/SwiftBar.app" ] && ! [ -d "$HOME/Applications/SwiftBar.app" ]; then
     echo "Installing SwiftBar..."
     brew install swiftbar
 fi
@@ -25,20 +28,27 @@ fi
 LOCAL="$(cd "$(dirname "$0")" && pwd)/plugins/cf_warp_status.30s.sh"
 DEST="$PLUGIN_DIR/cf_warp_status.30s.sh"
 if [ -f "$LOCAL" ]; then
-    SRC_MD5=$(md5 -q "$LOCAL")
-    DEST_MD5=$([ -f "$DEST" ] && md5 -q "$DEST" || echo "")
-    if [ "$SRC_MD5" != "$DEST_MD5" ]; then
+    SRC_SHA=$(shasum -a 256 "$LOCAL" | awk '{print $1}')
+    DEST_SHA=$([ -f "$DEST" ] && shasum -a 256 "$DEST" | awk '{print $1}' || echo "")
+    if [ "$SRC_SHA" != "$DEST_SHA" ]; then
         cp "$LOCAL" "$DEST"
     fi
 else
     echo "Downloading plugin..."
-    curl -fsSL "$REPO/plugins/cf_warp_status.30s.sh" -o "$DEST"
+    TMP=$(mktemp)
+    curl -fsSL "$REPO/plugins/cf_warp_status.30s.sh" -o "$TMP"
+    cp "$TMP" "$DEST"
 fi
 
 chmod +x "$PLUGIN_DIR/cf_warp_status.30s.sh"
 
 # Restart SwiftBar
-killall SwiftBar || true
+if killall SwiftBar 2>/dev/null; then
+    for i in {1..50}; do
+        pgrep -x "SwiftBar" >/dev/null || break
+        sleep 0.1
+    done
+fi
 
 # Open SwiftBar
 open -a SwiftBar
