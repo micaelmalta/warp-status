@@ -43,8 +43,12 @@ fi
 chmod +x "$PLUGIN_DIR/cf_warp_status.30s.sh"
 
 # Restart SwiftBar
-killall SwiftBar 2>/dev/null || true
-sleep 1
+if killall SwiftBar 2>/dev/null; then
+    for i in {1..50}; do
+        pgrep -x "SwiftBar" >/dev/null || break
+        sleep 0.1
+    done
+fi
 
 # Open SwiftBar
 open -a SwiftBar
