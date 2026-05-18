@@ -14,6 +14,9 @@ fi
 # Create plugin directory
 mkdir -p "$PLUGIN_DIR"
 
+# Set the plugin directory in the environment
+defaults write com.ameba.SwiftBar PluginDirectory -string "$PLUGIN_DIR"
+
 # Download or copy plugin
 if [ -f "$(dirname "$0")/plugins/cf_warp_status.5s.sh" ]; then
     cp "$(dirname "$0")/plugins/cf_warp_status.5s.sh" "$PLUGIN_DIR/"
@@ -24,5 +27,11 @@ fi
 
 chmod +x "$PLUGIN_DIR/cf_warp_status.5s.sh"
 
+# Restart SwiftBar
+killall SwiftBar || true
+
+# Open SwiftBar
+open -a SwiftBar
+
 echo ""
-echo "Done! Open SwiftBar and set the plugin directory to: $PLUGIN_DIR"
+echo "Done! SwiftBar should be running now."
