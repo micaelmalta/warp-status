@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -eo pipefail
 trap 'echo "Error: install.sh failed on line $LINENO" >&2' ERR
 TMP=""
 trap '[[ -n "$TMP" ]] && rm -f "$TMP"' EXIT
