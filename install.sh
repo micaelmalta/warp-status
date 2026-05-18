@@ -19,11 +19,16 @@ defaults write com.ameba.SwiftBar PluginDirectory -string "$PLUGIN_DIR"
 
 # Download or copy plugin
 LOCAL="$(cd "$(dirname "$0")" && pwd)/plugins/cf_warp_status.5s.sh"
-if [ -f "$LOCAL" ] && [ "$LOCAL" != "$PLUGIN_DIR/cf_warp_status.5s.sh" ]; then
-    cp "$LOCAL" "$PLUGIN_DIR/"
-elif [ ! -f "$LOCAL" ]; then
+DEST="$PLUGIN_DIR/cf_warp_status.5s.sh"
+if [ -f "$LOCAL" ]; then
+    SRC_MD5=$(md5 -q "$LOCAL")
+    DEST_MD5=$([ -f "$DEST" ] && md5 -q "$DEST" || echo "")
+    if [ "$SRC_MD5" != "$DEST_MD5" ]; then
+        cp "$LOCAL" "$DEST"
+    fi
+else
     echo "Downloading plugin..."
-    curl -fsSL "$REPO/plugins/cf_warp_status.5s.sh" -o "$PLUGIN_DIR/cf_warp_status.5s.sh"
+    curl -fsSL "$REPO/plugins/cf_warp_status.5s.sh" -o "$DEST"
 fi
 
 chmod +x "$PLUGIN_DIR/cf_warp_status.5s.sh"
