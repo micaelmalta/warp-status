@@ -43,7 +43,8 @@ fi
 chmod +x "$PLUGIN_DIR/cf_warp_status.30s.sh"
 
 # Restart SwiftBar
-killall SwiftBar || true
+killall SwiftBar 2>/dev/null || true
+sleep 1
 
 # Open SwiftBar
 open -a SwiftBar
