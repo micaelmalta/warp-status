@@ -18,9 +18,10 @@ mkdir -p "$PLUGIN_DIR"
 defaults write com.ameba.SwiftBar PluginDirectory -string "$PLUGIN_DIR"
 
 # Download or copy plugin
-if [ -f "$(dirname "$0")/plugins/cf_warp_status.5s.sh" ]; then
-    cp "$(dirname "$0")/plugins/cf_warp_status.5s.sh" "$PLUGIN_DIR/"
-else
+LOCAL="$(cd "$(dirname "$0")" && pwd)/plugins/cf_warp_status.5s.sh"
+if [ -f "$LOCAL" ] && [ "$LOCAL" != "$PLUGIN_DIR/cf_warp_status.5s.sh" ]; then
+    cp "$LOCAL" "$PLUGIN_DIR/"
+elif [ ! -f "$LOCAL" ]; then
     echo "Downloading plugin..."
     curl -fsSL "$REPO/plugins/cf_warp_status.5s.sh" -o "$PLUGIN_DIR/cf_warp_status.5s.sh"
 fi
