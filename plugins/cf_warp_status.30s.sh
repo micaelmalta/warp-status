@@ -2,7 +2,6 @@
 
 # Fetch the raw status from warp-cli
 WARP_RAW=$(/usr/local/bin/warp-cli status 2>&1)
-# WARP_RAW="Disconnected"
 
 # Check if the status contains BOTH "Connected" and "healthy"
 if [[ "$WARP_RAW" == *"Connected"* ]] && [[ "$WARP_RAW" == *"healthy"* ]]; then

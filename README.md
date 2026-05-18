@@ -1,6 +1,6 @@
 # WARP Status Bar
 
-A [SwiftBar](https://swiftbar.app) plugin that shows your Cloudflare WARP connection status in the macOS menu bar, refreshing every 5 seconds.
+A [SwiftBar](https://swiftbar.app) plugin that shows your Cloudflare WARP connection status in the macOS menu bar, refreshing every 30 seconds.
 
 | State | Menu Bar |
 |---|---|
@@ -46,7 +46,7 @@ SwiftBar will launch automatically with the plugin ready.
 
 ## How It Works
 
-The script calls `/usr/local/bin/warp-cli status` every 5 seconds and checks for both `Connected` and `healthy` in the output. No dependencies beyond `warp-cli` itself.
+The script calls `/usr/local/bin/warp-cli status` every 30 seconds and checks for both `Connected` and `healthy` in the output. No dependencies beyond `warp-cli` itself.
 
 ## License
 
