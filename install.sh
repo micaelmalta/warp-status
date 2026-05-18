@@ -8,7 +8,7 @@ trap '[[ -n "$TMP" ]] && rm -f "$TMP"' EXIT
 REPO="https://raw.githubusercontent.com/micaelmalta/warp-status/main"
 
 # Install SwiftBar
-if ! command -v swiftbar &>/dev/null && ! [ -d "/Applications/SwiftBar.app" ]; then
+if ! [ -d "/Applications/SwiftBar.app" ] && ! [ -d "$HOME/Applications/SwiftBar.app" ]; then
     echo "Installing SwiftBar..."
     brew install swiftbar
 fi
