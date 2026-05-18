@@ -22,8 +22,8 @@ else
 fi
 
 # Download or copy plugin
-LOCAL="$(cd "$(dirname "$0")" && pwd)/plugins/cf_warp_status.5s.sh"
-DEST="$PLUGIN_DIR/cf_warp_status.5s.sh"
+LOCAL="$(cd "$(dirname "$0")" && pwd)/plugins/cf_warp_status.30s.sh"
+DEST="$PLUGIN_DIR/cf_warp_status.30s.sh"
 if [ -f "$LOCAL" ]; then
     SRC_MD5=$(md5 -q "$LOCAL")
     DEST_MD5=$([ -f "$DEST" ] && md5 -q "$DEST" || echo "")
@@ -32,10 +32,10 @@ if [ -f "$LOCAL" ]; then
     fi
 else
     echo "Downloading plugin..."
-    curl -fsSL "$REPO/plugins/cf_warp_status.5s.sh" -o "$DEST"
+    curl -fsSL "$REPO/plugins/cf_warp_status.30s.sh" -o "$DEST"
 fi
 
-chmod +x "$PLUGIN_DIR/cf_warp_status.5s.sh"
+chmod +x "$PLUGIN_DIR/cf_warp_status.30s.sh"
 
 # Restart SwiftBar
 killall SwiftBar || true
