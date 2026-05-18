@@ -45,6 +45,21 @@ This will:
 
 SwiftBar will launch automatically with the plugin ready.
 
+## Updating
+
+Re-run the installer to get the latest version of the plugin.
+
+**Via curl:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/micaelmalta/warp-status/main/install.sh | bash
+```
+
+**From a local clone:**
+```bash
+git pull
+bash install.sh
+```
+
 ## How It Works
 
 The script calls `/usr/local/bin/warp-cli status` every 30 seconds and checks for both `Connected` and `healthy` in the output. No dependencies beyond `warp-cli` itself.
