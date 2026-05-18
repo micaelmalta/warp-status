@@ -1,6 +1,9 @@
 #!/bin/bash
 
 set -e
+trap 'echo "Error: install.sh failed on line $LINENO" >&2' ERR
+TMP=""
+trap '[[ -n "$TMP" ]] && rm -f "$TMP"' EXIT
 
 REPO="https://raw.githubusercontent.com/micaelmalta/warp-status/main"
 
@@ -25,14 +28,16 @@ fi
 LOCAL="$(cd "$(dirname "$0")" && pwd)/plugins/cf_warp_status.30s.sh"
 DEST="$PLUGIN_DIR/cf_warp_status.30s.sh"
 if [ -f "$LOCAL" ]; then
-    SRC_MD5=$(md5 -q "$LOCAL")
-    DEST_MD5=$([ -f "$DEST" ] && md5 -q "$DEST" || echo "")
-    if [ "$SRC_MD5" != "$DEST_MD5" ]; then
+    SRC_SHA=$(shasum -a 256 "$LOCAL" | awk '{print $1}')
+    DEST_SHA=$([ -f "$DEST" ] && shasum -a 256 "$DEST" | awk '{print $1}' || echo "")
+    if [ "$SRC_SHA" != "$DEST_SHA" ]; then
         cp "$LOCAL" "$DEST"
     fi
 else
     echo "Downloading plugin..."
-    curl -fsSL "$REPO/plugins/cf_warp_status.30s.sh" -o "$DEST"
+    TMP=$(mktemp)
+    curl -fsSL "$REPO/plugins/cf_warp_status.30s.sh" -o "$TMP"
+    cp "$TMP" "$DEST"
 fi
 
 chmod +x "$PLUGIN_DIR/cf_warp_status.30s.sh"
