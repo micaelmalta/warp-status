@@ -4,8 +4,9 @@ A [SwiftBar](https://swiftbar.app) plugin that shows your Cloudflare WARP connec
 
 | State | Menu Bar |
 |---|---|
-| Connected & healthy | **WARP** in white bold |
-| Disconnected or unhealthy | **⚠ WARP** in yellow bold |
+| Connected & healthy | White **WARP** |
+| Connected, network unstable | Yellow **⚠ WARP** |
+| Disconnected | Red **✕ WARP** |
 
 Click the menu bar item to see full status details.
 
