@@ -24,7 +24,9 @@ curl -fsSL https://raw.githubusercontent.com/micaelmalta/warp-status/main/instal
 This will:
 1. Install SwiftBar via Homebrew (if not already installed)
 2. Create the plugin directory at `~/.config/swiftbar/plugins`
-3. Copy the plugin script into place
+3. Download the plugin script
+4. Configure SwiftBar to use the plugin directory
+5. Launch SwiftBar automatically
 
 ## Manual Installation
 
@@ -33,18 +35,14 @@ This will:
    brew install swiftbar
    ```
 
-2. Clone the repo:
+2. Clone the repo and run the installer:
    ```bash
    git clone https://github.com/micaelmalta/warp-status.git
    cd warp-status
-   ```
-
-3. Run the installer:
-   ```bash
    bash install.sh
    ```
 
-4. Open SwiftBar and set the plugin directory to `~/.config/swiftbar/plugins`.
+SwiftBar will launch automatically with the plugin ready.
 
 ## How It Works
 
